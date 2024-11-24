@@ -1,29 +1,20 @@
 import serial 
-from datetime import date
+from datetime import datetime 
 try:
-    portA = serial.Serial('Puerto')
-    fecha = date.today()
-    fecha = "Fecha de recepción: " + fecha.strftime("%d/%m/%Y")
-    archivo = open("LogP3-recibido.txt","a")
-    archivo.write(fecha+"\n")
+    portA = serial.Serial('COM9')
+    fecha = datetime.now()
+    fecha = "Fecha de recepcion: " + fecha.strftime("%d/%m/%Y - %H:%M:%S")
+    archivo = open("LogP3-remoto.txt","a")
+    archivo.write(fecha+"\n\n")
+    archivo.write("\n---------Inicio de escucha---------\n")
     print("Inicio de escucha de mensajes")
     message = ""
 
-    while message != ".exit":
+    while message != ".exit\n":
         message = portA.readline().decode()
-        print()
-        archivo.write("Listened: " + message)
-    archivo.write("Finalización de")
+        print(">>> " + message, end="")
+        archivo.write("\tListened: " + message)
+    archivo.write("\n---------Finalizacion de transimicion---------\n")
 
-except:
+except Exception:
     print("Configuracion erronea de puerto, intenta otra vez")
-
-
-
-    
-
-
-
-    
-
-    
